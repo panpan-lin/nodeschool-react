@@ -1,11 +1,12 @@
 var React = require('react');
 
+/* the parent of all other components */
 var TodoBox = React.createClass({
   render: function() {
     return (
       <div className = "todoBox">
         <h1>Todos</h1>
-        <TodoList />
+        <TodoList data = {this.props.data} />
         <TodoForm />
       </div>
     );
@@ -14,12 +15,15 @@ var TodoBox = React.createClass({
 
 var TodoList = React.createClass({
   render: function() {
+    var todo = this.props.data.map(function(obj) {
+      // React make use of a key attribute to keep track of each component in the VirtualDOM
+      return <Todo title={obj.title} key={obj.title}>{obj.detail}</Todo>
+    });
     return (
       <div className = "todoList">
         <table style={{border: "2px solid black"}}>
           <tbody>
-            <Todo title="Shopping">Milk</Todo>
-            <Todo title="Hair cut">13:00</Todo>
+            {todo}
           </tbody>
         </table>
       </div>
