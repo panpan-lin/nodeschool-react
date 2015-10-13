@@ -8,6 +8,8 @@ var body = DOM.body;
 var div = DOM.div;
 var script = DOM.script;
 
+var ReactDomServer = require('react-dom/server');
+
 var browserify = require('browserify');
 
 app.set('port', (process.argv[2] || 3000));
@@ -40,11 +42,11 @@ app.use('/bundle.js', function(req, res) {
 */
 app.use('/', function(req, res) {
   var initialData = JSON.stringify(data);
-  var markup = React.renderToString(React.createElement(TodoBox, {data: data}));
+  var markup = ReactDomServer.renderToString(React.createElement(TodoBox, {data: data}));
 
   res.setHeader('Content-Type', 'text/html');
 
-  var html = React.renderToStaticMarkup(body(null,
+  var html = ReactDomServer.renderToStaticMarkup(body(null,
       div({id: 'app', dangerouslySetInnerHTML: {__html: markup}}),
       script({id: 'initial-data',
               type: 'text/plain',
