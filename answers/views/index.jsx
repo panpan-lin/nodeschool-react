@@ -39,14 +39,26 @@ var Todo = React.createClass({
   // Invoked once before the component is mounted.
   // The return value will be used as the initial value of this.state
   getInitialState: function() {
-    return {checked: false};
+    return {
+      checked: false,
+      TodoStyle: style.notCheckedTodo
+    };
   },
   handleChange: function() {
     this.setState({checked: !this.state.checked});
+    if (this.state.checked) {
+      this.setState({
+        TodoStyle: style.checkedTodo
+      });
+    } else {
+      this.setState({
+        TodoStyle: style.notCheckedTodo
+      });
+    }
   },
   render: function() {
     return (
-      <tr>
+      <tr style={this.state.TodoStyle}>
         <td style={style.tableContent}><input type="checkbox" checked={this.state.checked} onChange={this.handleChange} /></td>
         <td style={style.tableContent}>{this.props.title}</td>
         <td style={style.tableContent}>{this.props.children}</td>
@@ -66,6 +78,12 @@ var TodoForm = React.createClass({
 });
 
 var style = {
+  checkedTodo: {
+    textDecoration: "line-through"
+  },
+  notCheckedTodo: {
+    textDecoration: "none"
+  },
   tableContent: {
     border: "1px solid black"
   }
