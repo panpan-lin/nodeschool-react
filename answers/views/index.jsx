@@ -40,25 +40,16 @@ var Todo = React.createClass({
   // The return value will be used as the initial value of this.state
   getInitialState: function() {
     return {
-      checked: false,
-      TodoStyle: style.notCheckedTodo
+      checked: false
     };
   },
   handleChange: function() {
     this.setState({checked: !this.state.checked});
-    if (this.state.checked) {
-      this.setState({
-        TodoStyle: style.checkedTodo
-      });
-    } else {
-      this.setState({
-        TodoStyle: style.notCheckedTodo
-      });
-    }
   },
   render: function() {
+    var trStyle = this.state.checked ? style.checkedTodo : style.notCheckedTodo;
     return (
-      <tr style={this.state.TodoStyle}>
+      <tr style={trStyle}>
         <td style={style.tableContent}><input type="checkbox" checked={this.state.checked} onChange={this.handleChange} /></td>
         <td style={style.tableContent}>{this.props.title}</td>
         <td style={style.tableContent}>{this.props.children}</td>
